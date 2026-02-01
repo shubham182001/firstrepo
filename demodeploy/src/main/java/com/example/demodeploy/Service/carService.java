@@ -11,5 +11,23 @@ public class carService
 {
 	public static ArrayList<CarEntity> al=new ArrayList<CarEntity>();
 	
+	public Boolean addcar(CarEntity c)
+	{
+		boolean flag=al.add(c);
+		if(flag==true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public ArrayList<CarEntity> getCars()
+	{
+		return al;
+	}
+	
 
 }

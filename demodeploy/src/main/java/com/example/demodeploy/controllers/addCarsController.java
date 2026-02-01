@@ -14,6 +14,8 @@ import com.example.demodeploy.Service.carService;
 @RestController
 public class addCarsController
 {
+	@Autowired
+	private carService cs;
 	
 	@PostMapping("/addcar")
 	public ResponseEntity<String> addcar(@RequestBody CarEntity ce)
@@ -24,10 +26,20 @@ public class addCarsController
 		                .body("Car data is missing");
 		    }
 		System.out.println("Adding: "+ce);
-		carService.al.add(ce);
+		boolean flag=cs.addcar(ce);
+		if(flag==true)
+		{
+			 return ResponseEntity
+			            .status(HttpStatus.CREATED)
+			            .body("Car added successfully");
+		}
+		else
+		{
+			 return ResponseEntity
+			            .status(HttpStatus.BAD_REQUEST)
+			            .body("Car adding failed");
+		}
 		
-		  return ResponseEntity
-		            .status(HttpStatus.CREATED)
-		            .body("Car added successfully");
+		 
 	}
 }
