@@ -8,7 +8,7 @@ public class DemodeployApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemodeployApplication.class, args);
-		System.out.println("app started"); //demo
+		System.out.println("app started");
 	}
 
 }
