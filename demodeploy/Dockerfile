@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY . .
 
+# Fix Windows line endings + permissions
+RUN sed -i 's/\r$//' mvnw
 RUN chmod +x mvnw
+
 RUN ./mvnw clean package -DskipTests
 
 EXPOSE 8080
