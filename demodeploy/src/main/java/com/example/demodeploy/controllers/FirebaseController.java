@@ -21,13 +21,14 @@ public class FirebaseController {
 
     @PostMapping("/send")
     public String sendNotification(
-            @RequestParam String token
+            @RequestParam String token,
+            @RequestParam String message
     ){
 
         return service.sendNotification(
                 token,
-                "Test Notification",
-                "Hello from Spring Boot"
+                "Notification from RS jewellers",
+                message
         );
 
     }
