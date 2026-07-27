@@ -19,11 +19,11 @@ public class FirebaseConfig {
     public void initialize() {
         try {
             if (FirebaseApp.getApps().isEmpty()) {
-                // Read the JSON string from the Render Environment Variable
                 String firebaseConfig = System.getenv("FIREBASE_CONFIG_JSON");
 
                 if (firebaseConfig == null || firebaseConfig.isEmpty()) {
-                    throw new RuntimeException("FIREBASE_CONFIG_JSON environment variable is missing!");
+                    System.err.println("❌ ERROR: FIREBASE_CONFIG_JSON environment variable is missing or empty!");
+                    return;
                 }
 
                 InputStream serviceAccount = new ByteArrayInputStream(firebaseConfig.getBytes(StandardCharsets.UTF_8));
@@ -39,6 +39,7 @@ public class FirebaseConfig {
                 System.out.println("======================================");
             }
         } catch (Exception e) {
+            System.err.println("❌ ERROR: Failed to initialize Firebase application!");
             e.printStackTrace();
         }
     }
