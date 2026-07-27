@@ -22,7 +22,7 @@ public class FirebaseConfig {
                 String firebaseConfig = System.getenv("FIREBASE_CONFIG_JSON");
 
                 if (firebaseConfig == null || firebaseConfig.isEmpty()) {
-                    System.err.println("❌ ERROR: FIREBASE_CONFIG_JSON environment variable is missing or empty!");
+                    System.err.println("CRITICAL ERROR: FIREBASE_CONFIG_JSON environment variable is NULL or EMPTY!");
                     return;
                 }
 
@@ -39,8 +39,8 @@ public class FirebaseConfig {
                 System.out.println("======================================");
             }
         } catch (Exception e) {
-            System.err.println("❌ ERROR: Failed to initialize Firebase application!");
-            e.printStackTrace();
+            System.err.println("CRITICAL ERROR: Exception thrown during Firebase initialization!");
+            e.printStackTrace(); // This will print the exact JSON parsing or credentials error to your logs
         }
     }
 }
