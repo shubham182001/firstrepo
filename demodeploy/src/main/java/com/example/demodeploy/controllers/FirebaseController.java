@@ -10,6 +10,7 @@ import com.example.demodeploy.Service.FirebaseNotificationService;
 
 @RestController
 @RequestMapping("/notification")
+@CrossOrigin(origins = "*")
 public class FirebaseController {
 
 
