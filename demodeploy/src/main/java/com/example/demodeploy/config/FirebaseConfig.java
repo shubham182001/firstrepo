@@ -1,9 +1,7 @@
 package com.example.demodeploy.config;
 
-import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -20,15 +18,16 @@ public class FirebaseConfig {
     public void initialize() {
         try {
             if (FirebaseApp.getApps().isEmpty()) {
-                String base64Config = System.getenv("FIREBASE_CONFIG_BASE64");
-
-                if (base64Config == null || base64Config.isEmpty()) {
-                    System.err.println("CRITICAL ERROR: FIREBASE_CONFIG_BASE64 environment variable is MISSING or EMPTY!");
-                    return;
+                // Render mounts secret files in /etc/secrets/ or the root directory
+                String filePath = "/etc/secrets/firebase-service-account.json";
+                
+                InputStream serviceAccount;
+                try {
+                    serviceAccount = new FileInputStream(filePath);
+                } catch (Exception e) {
+                    // Fallback to local root if testing on your local computer
+                    serviceAccount = new FileInputStream("firebase-service-account.json");
                 }
-
-                byte[] decodedBytes = Base64.getDecoder().decode(base64Config.trim());
-                InputStream serviceAccount = new ByteArrayInputStream(decodedBytes);
 
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -37,7 +36,7 @@ public class FirebaseConfig {
                 FirebaseApp.initializeApp(options);
 
                 System.out.println("======================================");
-                System.out.println(" Firebase Initialized Successfully via Base64!");
+                System.out.println(" Firebase Initialized Successfully from Secret File!");
                 System.out.println("======================================");
             }
         } catch (Exception e) {
